@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class AuthorSteps {
+public class AuthorAddSteps {
     private  AuthorsRepository authorsRepository;
     private AuthorsSystem  authorsSystem;
     private Author author;
@@ -63,5 +63,21 @@ public class AuthorSteps {
     public void system_returns_invalid_or_missing_email() throws Throwable {
         ResponseEntity<Author> response = authorsSystem.addAuthor(author, 1);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @When("^user provides author information (.+) and (.+) with missing first name$")
+    public void userProvidedAuthorInformationWithMissingFirstName(String email, String lastname) {
+        author = new Author(-1, null, lastname, email);
+    }
+    @Then("System returns Invalid or missing first name")
+    public void system_returns_Invalid_or_missing_first_name() {
+        ResponseEntity<Author> response = authorsSystem.addAuthor(author, 1);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.EXPECTATION_FAILED);
+    }
+
+
+    @When("^user provides invalid email (.+), (.+) and (.+)$")
+    public void userProvidesInvalidEmail(String firstname, String lastname, String email) {
+        author = new Author(-1, firstname, lastname, email);
     }
 }

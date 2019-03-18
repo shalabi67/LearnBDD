@@ -15,6 +15,9 @@ public class Author {
     private String lastName;
     private String email;
 
+    public Author() {
+
+    }
     public Author(int authorId, String firstName, String lastName, String email) {
         this.authorId = authorId;
         this.firstName = firstName;
